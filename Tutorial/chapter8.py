@@ -61,7 +61,7 @@ def getContours(img):
                         (x+(w//2)-10,y+(h//2)-10),cv2.FONT_HERSHEY_COMPLEX,0.7,
                         (0,0,0),2)
 
-path = 'Resources/shapes.png'
+path = 'Tutorial/Resources/shapes.png'
 img = cv2.imread(path)
 imgContour = img.copy()
 

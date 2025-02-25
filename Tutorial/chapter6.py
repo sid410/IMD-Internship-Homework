@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-img = cv2.imread("Resources/lena.png")
+img = cv2.imread("Tutorial/Resources/lena.png")
 
 def stackImages(scale,imgArray):
     rows = len(imgArray)
@@ -34,7 +34,7 @@ def stackImages(scale,imgArray):
         ver = hor
     return ver
 
-img = cv2.imread("Resources/lena.png")
+img = cv2.imread("Tutorial/Resources/lena.png")
 imgGray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 imgStack = stackImages(0.5,([img,imgGray,img],[img,img,img]))
