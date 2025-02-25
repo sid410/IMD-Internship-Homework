@@ -1,1 +1,16 @@
-print("5")
+import cv2
+name = "Resources/lambo.PNG"
+img = cv2.imread(name)
+print(img.shape)
+
+#画像に文字を描画
+cv2.putText(img,"This car is luxury.",(0,30),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,255),cv2.LINE_4)
+
+
+if img is None:
+    print("error")
+else:
+    cv2.imshow("lambo",img)
+    cv2.waitKey(1)
+    cv2.waitKey(0)
+
