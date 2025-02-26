@@ -76,7 +76,7 @@ Imagestack=stackImages(0.8,([img,imggray,imgblur],
 
 
 cv2.imshow("Stack", Imagestack)
-cv2.imwrite("Stack.png", Imagestack)
+
 
 
 cv2.waitKey(0)
