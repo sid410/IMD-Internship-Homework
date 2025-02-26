@@ -53,6 +53,7 @@ with mp_hands.Hands(
     npc_gesture = None  
     result = ""  
     saved_player_gesture = "None"
+    draw_display_time = None
 
     while cap.isOpened():
         success, image = cap.read()
@@ -86,6 +87,7 @@ with mp_hands.Hands(
                 countdown_start_time = time.time()
                 npc_gesture = None
                 result = ""
+                draw_display_time = None
 
         if game_active:
             elapsed_time = time.time() - countdown_start_time
@@ -96,20 +98,31 @@ with mp_hands.Hands(
                 else:  
                     npc_gesture = random.choice(gestures)
                     result = determine_winner(saved_player_gesture, npc_gesture)
+                    if result == "Draw":
+                        draw_display_time = time.time()
 
         cv2.putText(image, f"Player: {saved_player_gesture}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
         if npc_gesture is not None:
             cv2.putText(image, f"NPC: {npc_gesture}", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
             cv2.putText(image, result, (10, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
-            cv2.putText(image, "Press Enter to play again", (10, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+            
+            if result == "Draw" and draw_display_time is not None:
+                if time.time() - draw_display_time >= 1:
+                    game_active = True
+                    countdown_start_time = time.time()
+                    npc_gesture = None
+                    result = ""
+                    draw_display_time = None
+            else:
+                cv2.putText(image, "Press Enter to play again", (10, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
         cv2.imshow('janken', image)
 
         key = cv2.waitKey(1) & 0xFF
         if key == 27: 
             break
-        elif key == 13 and npc_gesture is not None: 
+        elif key == 13 and npc_gesture is not None and result != "Draw": 
             game_active = False
             countdown_start_time = None
             npc_gesture = None
