@@ -1,4 +1,5 @@
 import cv2
+import random
 
 
 def size(i,j):
@@ -7,8 +8,6 @@ def size(i,j):
         return 1
     else:
         return 0
-
-
 
 def main():
     # 動画の読み取り

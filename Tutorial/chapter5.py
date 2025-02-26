@@ -13,6 +13,9 @@ if img is None:
     print("error")
 else:
     cv2.imshow("lambo",img)
+    cv2.imwrite('IMD-Internship-Homework/Tutorial/lambo.jpg',img)
+    
+
     cv2.waitKey(1)
     cv2.waitKey(0)
 
