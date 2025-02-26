@@ -9,19 +9,19 @@ mp_hands = mp.solutions.hands
 
 gestures = ["rock", "scissors", "paper"]  
 
-def recognize_gesture(hand_landmarks): #じゃんけんの手を判定
+def recognize_gesture(hand_landmarks):
     tips = [4, 8, 12, 16, 20] 
     mcps = [2, 5, 9, 13, 17] 
 
     open_fingers = 0  
 
-    for tip, mcp in zip(tips[1:], mcps[1:]):  # 親指以外の開いている数
+    for tip, mcp in zip(tips[1:], mcps[1:]): 
             if hand_landmarks.landmark[tip].y < hand_landmarks.landmark[mcp].y:
                 open_fingers += 1  
         
-    is_thumb_open = hand_landmarks.landmark[4].x > hand_landmarks.landmark[2].x  # 親指の判定
+    is_thumb_open = hand_landmarks.landmark[4].x > hand_landmarks.landmark[2].x  
 
-    #自分の手を決める
+
     if open_fingers == 0 and is_thumb_open == False:
         return "rock"
     elif open_fingers == 2 and is_thumb_open == False:
@@ -31,7 +31,7 @@ def recognize_gesture(hand_landmarks): #じゃんけんの手を判定
     else:
         return "None"
 
-def determine_winner(player, npc): #勝敗の判定
+def determine_winner(player, npc):
     if player == npc:
         return "Draw"
     elif ((player == "rock" and npc == "scissors") or 
@@ -60,12 +60,12 @@ with mp_hands.Hands(
             print("Ignoring empty camera frame.")
             continue
 
-        # 画像をRGBに変換
+     
         image.flags.writeable = False
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         results = hands.process(image)
 
-        # 画像をBGRに戻す
+   
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
@@ -78,35 +78,34 @@ with mp_hands.Hands(
                     mp_drawing_styles.get_default_hand_landmarks_style(),
                     mp_drawing_styles.get_default_hand_connections_style())
 
-                # じゃんけんの手の形を判定
+             
                 player_gesture = recognize_gesture(hand_landmarks)
-                saved_player_gesture = player_gesture  # 結果が決まる前に手の形を保存
+                saved_player_gesture = player_gesture  
 
-        # 画像を左右反転（カメラ映像を見やすくするため）
+    
         image = cv2.flip(image, 1)
 
-        # ゲームが始まっていない場合、Enterキーで開始
-        if not game_active and cv2.waitKey(1) & 0xFF == 13:  # Enterキー
+   
+        if not game_active and cv2.waitKey(1) & 0xFF == 13: 
             game_active = True
             countdown_start_time = time.time()
             npc_gesture = None
             result = ""
 
-        # ゲームが開始されたらカウントダウン
         if game_active:
             elapsed_time = time.time() - countdown_start_time
-            if npc_gesture is None:  # NPCがまだ手を出していない場合
-                if elapsed_time < 3:  # 3秒カウントダウン
+            if npc_gesture is None:  
+                if elapsed_time < 3:  
                     countdown_number = 3 - int(elapsed_time)
                     cv2.putText(image, str(countdown_number), (250, 250), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 255, 255), 5, cv2.LINE_AA)
-                else:  # 3秒経過後にNPCの手を決定
+                else:  
                     npc_gesture = random.choice(gestures)
                     result = determine_winner(saved_player_gesture, npc_gesture)
 
-        # プレイヤーの手を表示
+   
         cv2.putText(image, f"Player: {saved_player_gesture}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
-        # NPCの手が決まっていたら表示
+     
         if npc_gesture is not None:
             cv2.putText(image, f"NPC: {npc_gesture}", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
             cv2.putText(image, result, (10, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
@@ -114,11 +113,11 @@ with mp_hands.Hands(
 
         cv2.imshow('janken', image)
 
-        # 結果が表示された後にEnterキーを押すまで待つ
+    
         key = cv2.waitKey(1) & 0xFF
-        if key == 27:  # ESCキーで終了
+        if key == 27:
             break
-        elif key == 13 and npc_gesture is not None:  # Enterキーで再試合
+        elif key == 13 and npc_gesture is not None: 
             game_active = False
             countdown_start_time = None
             npc_gesture = None

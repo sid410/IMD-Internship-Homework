@@ -25,6 +25,6 @@ def process_image(image_path):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-# 画像ファイルのパスを指定して実行
-image_path = "Project/Resources/human_hd.jpg"  # 画像のパスを指定
+
+image_path = "Project/Resources/human_hd.jpg" 
 process_image(image_path)

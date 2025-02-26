@@ -1,7 +1,7 @@
 import cv2
 
-input_video_path = 'Project/Resources/Human.mp4'  # 4K動画の入力ファイルパス
-output_video_path = 'Project/Resources/Human_hd.mp4'  # 出力するHD動画のファイルパス
+input_video_path = 'Project/Resources/Human.mp4'  
+output_video_path = 'Project/Resources/Human_hd.mp4'  
 
 cap = cv2.VideoCapture(input_video_path)
 
