@@ -26,6 +26,7 @@ else:
     else:
         print("OK")
         cv2.imshow("Image",result)
+        cv2.imwrite(r'/Users/ys4-chan/Documents/GitHub/IMD-Internship-Homework/Tutorial/proof/size.jpg', img)
         cv2.waitKey(5)
         cv2.waitKey(0)
         #cv2.destroyAllwindows()

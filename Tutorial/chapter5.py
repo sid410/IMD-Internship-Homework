@@ -12,9 +12,9 @@ cv2.putText(img,"It's very costly but superb.",(180,420),cv2.FONT_HERSHEY_DUPLEX
 if img is None:
     print("error")
 else:
+
+    cv2.imwrite(r'/Users/ys4-chan/Documents/GitHub/IMD-Internship-Homework/Tutorial/proof/lambo.jpg',img)
     cv2.imshow("lambo",img)
-    cv2.imwrite('IMD-Internship-Homework/Tutorial/lambo.jpg',img)
-    
 
     cv2.waitKey(1)
     cv2.waitKey(0)

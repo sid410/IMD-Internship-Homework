@@ -21,6 +21,7 @@ else:
         else:
             break
     size = cv2.resize(img,(w,h))
+    cv2.imwrite(r'/Users/ys4-chan/Documents/GitHub/IMD-Internship-Homework/Tutorial/proof/shapes1.jpg',img)
     cv2.imshow("img",size)
     cv2.waitKey(0)
 
