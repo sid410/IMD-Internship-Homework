@@ -1,3 +1,4 @@
+#顔を検出
 import cv2
 
 faceCascade=cv2.CascadeClassifier("Tutorial/Resources/haarcascade_frontalface_default.xml")
