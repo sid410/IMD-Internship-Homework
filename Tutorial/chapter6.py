@@ -1,3 +1,4 @@
+#同じ画像を縦横に結合する
 import cv2
 import numpy as np
 
@@ -42,6 +43,7 @@ imgStack=stackImages(0.5,([img,imgGray,img],[imgGray,img,imgGray]))
 
 # cv2.imshow("Horizontal",imgHor)
 # cv2.imshow("Vertical",imgVer)
+cv2.imshow("Image",img)
 cv2.imshow("Image Stack",imgStack)
 
 cv2.waitKey(0)
