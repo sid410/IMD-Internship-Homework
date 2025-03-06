@@ -96,7 +96,7 @@ path="Project/cut_jp_sample.png"
 
 img = cv2.imread(path)
 imgHSV=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-imgBlur = cv2.GaussianBlur(imgHSV,(1,1),5)
+imgBlur = cv2.GaussianBlur(imgHSV,(1,1),2)
 lower=np.array([0,0,180])
 upper=np.array([255,255,255])
 mask=cv2.inRange(imgBlur,lower,upper)
