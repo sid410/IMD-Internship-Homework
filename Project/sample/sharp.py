@@ -137,4 +137,4 @@ def sharpenMem(img_gray, slim, Blocksize, bias):
     return outimage
 
 if __name__ =='__main__':
-    sharpenImg("Project/sample.png")
+    sharpenImg("Project/Resources/sample.png")

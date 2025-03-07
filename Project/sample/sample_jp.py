@@ -90,7 +90,7 @@ tool = tools[0]
 #OCRの設定 ※tesseract_layout=6が精度には重要。デフォルトは3
 builder = pyocr.builders.TextBuilder(tesseract_layout=3)
 
-path="Project/cut_jp_sample.png"
+path="Project/Resources/cut_jp_sample.png"
 
 # path="Project/sample.png"
 

@@ -5,7 +5,7 @@ import numpy as np
 import sys
 from PIL import Image,ImageEnhance
 
-path="Project/cut_jp_sample.png"
+path="Project/Resources/cut_jp_sample.png"
 
 def empty(a):
     pass

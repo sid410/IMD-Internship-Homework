@@ -19,16 +19,31 @@ tool = tools[0]
 #OCRの設定 ※tesseract_layout=6が精度には重要。デフォルトは3
 builder = pyocr.builders.TextBuilder(tesseract_layout=6)
 
-img = cv2.imread('Project/cut_en_sample_gray.png')
+imgOri = cv2.imread('Project/Resources/cut_en_sample_2.png')
 
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+kernel = np.array([[ 0, -0.5,  0],
+                   [-0.5,  3, -0.5],
+                   [ 0, -0.5,  0]])
 
-edge_img=cv2.Canny(gray,60,60)
+#画像の前処理
+imgHSV=cv2.cvtColor(imgOri,cv2.COLOR_BGR2HSV)
+imgBlur = cv2.GaussianBlur(imgHSV,(9,9),0)
+imgSharp = cv2.filter2D(imgBlur,-1,kernel)
+lower=np.array([0,0,190])
+upper=np.array([255,255,255])
+imgGray=cv2.inRange(imgSharp,lower,upper)
+
+#前処理したデータをrgbに
+img=cv2.cvtColor(imgGray,cv2.COLOR_GRAY2RGB)
+
+# gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+edge_img=cv2.Canny(imgGray,60,60)
 kernel = np.ones((3,3),np.uint8)
 edge_img=cv2.dilate(edge_img,kernel,iterations=3)
 cv2.imshow("edge",edge_img)
 
-contours,hierarchy=cv2.findContours(gray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+contours,hierarchy=cv2.findContours(imgGray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
 out=[]
 for c in contours:

@@ -19,7 +19,7 @@ tool = tools[0]
 #OCRの設定 ※tesseract_layout=6が精度には重要。デフォルトは3
 builder = pyocr.builders.TextBuilder(tesseract_layout=6)
 
-img = cv2.imread('Project/cut_jp_sample_gray.png')
+img = cv2.imread('Project/Resources/cut_jp_sample_gray.png')
 
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
