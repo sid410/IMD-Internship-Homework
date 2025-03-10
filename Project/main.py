@@ -32,21 +32,22 @@ def detect(img):
 
     #画像の前処理
     imgHSV=cv2.cvtColor(cut_img,cv2.COLOR_BGR2HSV)
-    imgBlur = cv2.GaussianBlur(imgHSV,(9,9),0)
-    imgSharp = cv2.filter2D(imgBlur,-1,kernel)
     lower=np.array([0,0,190])
     upper=np.array([255,255,255])
-    imgGray=cv2.inRange(imgSharp,lower,upper)
+    imgGray=cv2.inRange(imgHSV,lower,upper)
+    imgBlur = cv2.GaussianBlur(imgGray,(9,9),0)
+    imgSharp = cv2.filter2D(imgBlur,-1,kernel)
+    
 
     #前処理したデータをrgbに
-    img=cv2.cvtColor(imgGray,cv2.COLOR_GRAY2RGB)
+    img=cv2.cvtColor(imgSharp,cv2.COLOR_GRAY2RGB)
 
     # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    edge_img=cv2.Canny(imgGray,60,60)
+    edge_img=cv2.Canny(imgSharp,60,60)
     kernel = np.ones((3,3),np.uint8)
     edge_img=cv2.dilate(edge_img,kernel,iterations=3)
-    cv2.imshow("edge",edge_img)
+    # cv2.imshow("edge",edge_img)
 
     contours,hierarchy=cv2.findContours(imgGray,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
@@ -58,7 +59,7 @@ def detect(img):
     for i in range(len(out)):
         cv2.fillConvexPoly(mask, out[i], (0))
 
-    cv2.imshow("mask",mask)
+    # cv2.imshow("mask",mask)
 
     mask = np.ones(edge_img.shape)*255
     for i in range(len(contours)):
